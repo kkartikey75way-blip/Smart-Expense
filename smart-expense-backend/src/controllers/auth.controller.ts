@@ -3,10 +3,19 @@ import {
   registerUserService,
   loginUserService,
   refreshTokenService,
-  logoutService
+  logoutService,
+  getProfileService
 } from "../services/auth.service";
 
-
+export const getProfile = async (req: Request, res: Response) => {
+  try {
+    const userId = (req as any).user.id;
+    const user = await getProfileService(userId);
+    res.json(user);
+  } catch (error: any) {
+    res.status(400).json({ message: error.message });
+  }
+};
 
 export const register = async (req: Request, res: Response) => {
   try {

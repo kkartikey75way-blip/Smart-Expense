@@ -57,12 +57,34 @@ export const getMonthlyStatsRepo = async (userId: string) => {
             $group: {
                 _id: {
                     month: { $month: "$date" },
-                    year: { $year: "$date" },
-                    type: "$type"
+                    year: { $year: "$date" }
                 },
-                total: { $sum: "$amount" }
+                income: {
+                    $sum: { $cond: [{ $eq: ["$type", "income"] }, "$amount", 0] }
+                },
+                expense: {
+                    $sum: { $cond: [{ $eq: ["$type", "expense"] }, "$amount", 0] }
+                }
             }
         },
-        { $sort: { "_id.year": 1, "_id.month": 1 } }
+        { $sort: { "_id.year": 1, "_id.month": 1 } },
+        {
+            $project: {
+                _id: {
+                    $concat: [
+                        {
+                            $arrayElemAt: [
+                                ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                                "$_id.month"
+                            ]
+                        },
+                        " ",
+                        { $toString: "$_id.year" }
+                    ]
+                },
+                income: 1,
+                expense: 1
+            }
+        }
     ]);
 };

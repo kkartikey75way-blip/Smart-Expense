@@ -6,6 +6,7 @@ import authRoutes from "./routes/auth.routes";
 import transactionRoutes from "./routes/transaction.routes";
 import analyticsRoutes from "./routes/analytics.routes";
 import exportRoutes from "./routes/export.routes";
+import statementRoutes from "./routes/statement.routes";
 
 const app = express();
 
@@ -17,5 +18,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/transactions", transactionRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/export", exportRoutes);
+app.use("/api/statement", statementRoutes);
 
 export default app;

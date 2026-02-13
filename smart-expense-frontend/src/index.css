@@ -1,5 +1,103 @@
 @import "tailwindcss";
 
-button{
-  cursor: pointer;
+@theme {
+  --color-brand-primary: #8b5cf6;
+  --color-brand-secondary: #ec4899;
+
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Theme Variables */
+  --bg-main: #030712;
+  --bg-gradient-end: #1e1b4b;
+  --text-main: #ffffff;
+  --text-muted: #9ca3af;
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --border-muted: rgba(255, 255, 255, 0.1);
+  --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+:root.light {
+  --bg-main: #f8fafc;
+  --bg-gradient-end: #e2e8f0;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --glass-bg: rgba(255, 255, 255, 0.4);
+  --glass-border: rgba(15, 23, 42, 0.05);
+  --border-muted: rgba(15, 23, 42, 0.08);
+  --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+@layer base {
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    background: radial-gradient(circle at top right,
+        var(--bg-gradient-end) 0%,
+        var(--bg-main) 60%);
+
+    min-height: 100vh;
+    margin: 0;
+  }
+
+  button {
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+}
+
+@utility glass {
+  background-color: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  box-shadow: var(--card-shadow);
+  transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+@utility glass-card {
+  background-color: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  box-shadow: var(--card-shadow);
+  border-radius: 1rem;
+  padding: 2rem;
+  transition: all 0.4s ease;
+}
+
+/* Gradient Text */
+@utility text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(to right,
+      var(--color-brand-primary),
+      var(--color-brand-secondary));
+}
+
+@utility animate-blob {
+  animation: blob 7s infinite alternate;
+}
+
+@keyframes blob {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
 }

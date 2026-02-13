@@ -33,3 +33,7 @@ export const updateTransactionRepo = async (
 export const deleteTransactionRepo = async (id: string) => {
   return Transaction.findByIdAndDelete(id);
 };
+
+export const getAllTransactionsByUserIdRepo = async (userId: string) => {
+  return Transaction.find({ userId }).sort({ date: -1 });
+};
